@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 class Celula extends StatefulWidget {
   final JogoDaVelha jogo;
   final int posicao;
+  final VoidCallback algumaCelulaClicada;
 
   const Celula({
     super.key,
     required this.jogo,
     required this.posicao,
+    required this.algumaCelulaClicada,
   });
 
   @override
@@ -16,11 +18,22 @@ class Celula extends StatefulWidget {
 }
 
 class _CelulaState extends State<Celula> {
+  late List<Widget> tabuleiro;
+  String apresentacaoTurno = 'Turno de ';
+
+  //@override
+  //void initState() {
+  //  super.initState();
+  //  atualizaApresentacaoTurno();
+  //  atualizarTabuleiro();
+  //}
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         _fazerJogada();
+        widget.algumaCelulaClicada();
       },
       child: Container(
           alignment: Alignment.center,
