@@ -33,7 +33,6 @@ class _CelulaState extends State<Celula> {
     return GestureDetector(
       onTap: () {
         _fazerJogada();
-        widget.algumaCelulaClicada();
       },
       child: Container(
           alignment: Alignment.center,
@@ -50,6 +49,7 @@ class _CelulaState extends State<Celula> {
 
   _fazerJogada() {
     if (widget.jogo.jogar(widget.posicao)) {
+      widget.algumaCelulaClicada();
       setState(() {});
     }
   }
