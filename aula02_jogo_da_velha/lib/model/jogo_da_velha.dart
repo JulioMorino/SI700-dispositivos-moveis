@@ -74,7 +74,6 @@ class JogoDaVelha {
 
   reiniciar() {
     tabuleiro.fillRange(0, tabuleiro.length, 0);
-    print(tabuleiro[4]);
     turno_atual = -1;
   }
 }

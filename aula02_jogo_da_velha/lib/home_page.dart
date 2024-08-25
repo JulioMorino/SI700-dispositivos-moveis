@@ -13,15 +13,20 @@ class _MyHomePageState extends State<MyHomePage> {
   JogoDaVelha jogo = JogoDaVelha();
   String turnoAtual = 'Turno de O';
   String vencedor = '';
+  int contaTurnos = 0;
 
   void atualizarEstado() {
     setState(() {
+      contaTurnos++;
+
       turnoAtual = 'Turno de ${jogo.obterVezDoJogador()}';
       if (jogo.verificaVencedor()) {
-        print(jogo.verificaVencedor());
         jogo.turno_atual *= -1; //pois a vitoria foi na jogada anterior
         vencedor = jogo.obterVezDoJogador();
+        print(jogo.verificaVencedor());
         criarReinicio();
+      } else if (contaTurnos == 9 && vencedor == '') {
+        criarReinicio(); //deu velha
       }
     });
   }
@@ -29,12 +34,21 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Jogo da Velha - $turnoAtual')),
+        appBar: AppBar(
+          title: Text(
+            'Jogo da Velha - $turnoAtual',
+            style: TextStyle(color: Colors.white, fontSize: 30),
+          ),
+          backgroundColor: Color.fromARGB(255, 41, 82, 245),
+        ),
         body: Center(
           child: GridView.count(
               crossAxisCount: 3, children: construirConteudo(jogo)),
         ),
-        bottomNavigationBar: criarReinicio());
+        bottomNavigationBar: Container(
+            height: 220,
+            color: Color.fromARGB(255, 41, 82, 245),
+            child: criarReinicio()));
   }
 
   construirConteudo(jogo) {
@@ -51,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget criarReinicio() {
-    if (jogo.verificaVencedor()) {
+    if (contaTurnos == 9 || jogo.verificaVencedor()) {
       return Container(
           height: 200,
           child: Row(
@@ -60,23 +74,33 @@ class _MyHomePageState extends State<MyHomePage> {
               Padding(
                   padding: EdgeInsets.all(20),
                   child: Text(
-                    vencedor.isEmpty ? '' : 'Vencedor: $vencedor',
-                    style: TextStyle(fontSize: 30),
+                    vencedor.isEmpty ? 'Deu velha!' : 'Vencedor: $vencedor',
+                    style: TextStyle(fontSize: 30, color: Colors.white),
                   )),
               ElevatedButton(
                 onPressed: () {
                   setState(() {
                     jogo.reiniciar();
-                    print(jogo.tabuleiro[4]);
+                    contaTurnos = 0;
+                    turnoAtual = 'Turno de ${jogo.obterVezDoJogador()}';
+                    vencedor = '';
                   });
                 },
                 child: Text('Reiniciar Partida'),
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Color.fromARGB(255, 21, 67, 253),
+                  backgroundColor: Colors.white,
+                  textStyle:
+                      TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  padding: EdgeInsets.all(25),
+                ),
               ),
             ],
           ));
-    } else
-      return Container(
-        height: 50,
-      );
+    }
+
+    return Container(
+      height: 50,
+    );
   }
 }

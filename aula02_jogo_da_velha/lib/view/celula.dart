@@ -21,13 +21,6 @@ class _CelulaState extends State<Celula> {
   late List<Widget> tabuleiro;
   String apresentacaoTurno = 'Turno de ';
 
-  //@override
-  //void initState() {
-  //  super.initState();
-  //  atualizaApresentacaoTurno();
-  //  atualizarTabuleiro();
-  //}
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -36,14 +29,29 @@ class _CelulaState extends State<Celula> {
       },
       child: Container(
           alignment: Alignment.center,
-          decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
+          decoration: BoxDecoration(
+              border: Border.all(
+                  color: Color.fromARGB(255, 41, 82, 245), width: 10)),
           child: _buildContent()),
     );
   }
 
   Widget _buildContent() {
+    if (widget.jogo.obterEstadoPosicao(widget.posicao) == 'X') {
+      return Center(
+        child: Text(
+          widget.jogo.obterEstadoPosicao(widget.posicao),
+          style: TextStyle(
+              fontSize: 40, fontWeight: FontWeight.w500, color: Colors.red),
+        ),
+      );
+    }
     return Center(
-      child: Text(widget.jogo.obterEstadoPosicao(widget.posicao)),
+      child: Text(
+        widget.jogo.obterEstadoPosicao(widget.posicao),
+        style: TextStyle(
+            fontSize: 40, fontWeight: FontWeight.w500, color: Colors.purple),
+      ),
     );
   }
 
