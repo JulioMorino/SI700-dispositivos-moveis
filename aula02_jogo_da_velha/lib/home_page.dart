@@ -23,7 +23,6 @@ class _MyHomePageState extends State<MyHomePage> {
       if (jogo.verificaVencedor()) {
         jogo.turno_atual *= -1; //pois a vitoria foi na jogada anterior
         vencedor = jogo.obterVezDoJogador();
-        print(jogo.verificaVencedor());
         criarReinicio();
       } else if (contaTurnos == 9 && vencedor == '') {
         criarReinicio(); //deu velha
