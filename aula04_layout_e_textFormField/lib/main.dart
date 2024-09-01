@@ -1,6 +1,4 @@
-import 'package:aula04_layout_e_textformfield/view/layout/my_bottom_navigation_bar.dart';
 import 'package:aula04_layout_e_textformfield/view/layout/my_navigation_drawer.dart';
-import 'package:aula04_layout_e_textformfield/view/layout/my_tab_layout.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const MyApp());

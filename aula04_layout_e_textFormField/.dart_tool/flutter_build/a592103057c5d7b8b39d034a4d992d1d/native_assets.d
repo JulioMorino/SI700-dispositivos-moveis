@@ -1,0 +1,1 @@
+ C:\\Dev\\flutter_projects\\Aulas_mobile\\aula04_layout_e_textFormField\\.dart_tool\\flutter_build\\a592103057c5d7b8b39d034a4d992d1d\\native_assets.yaml: 
