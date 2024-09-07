@@ -112,15 +112,18 @@ class _TerceiraTelaState extends State<TerceiraTela> {
             ),
             ElevatedButton(
               onPressed: () {
-                if (_formKey.currentState!.validate()) {
+                if (_formKey.currentState!.validate() && !_termsAccepted) {
+                  showTermDialog();
+                } else if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
                   Future<String?> futureResult =
                       SheetsDatabase.helper.submitData([
                     name,
+                    _selectedOption == 1 ? 'Email' : 'Telefone',
                     contact,
                     userMessage,
-                    _selectedOption == 1 ? 'Email' : 'Telefone',
-                    _selectedCategory!
+                    _selectedCategory!,
+                    _termsAccepted == true ? 'Sim' : 'Não'
                   ]);
 
                   showModalBottomSheet(
@@ -133,11 +136,51 @@ class _TerceiraTelaState extends State<TerceiraTela> {
                       );
                     },
                   );
+
+                  _formKey.currentState!.reset();
+                  setState(() {
+                    _termsAccepted = false;
+                    _selectedOption = 1;
+                    _selectedCategory = null;
+                  });
                 }
               },
               child: Text('Enviar'),
             ),
           ],
         ));
+  }
+
+  showTermDialog() {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: const Color.fromARGB(255, 27, 27, 27),
+          title: Icon(
+            Icons.error,
+            color: Colors.red,
+            size: 60,
+          ),
+          content: Text(
+            'Você precisa aceitar os termos e condições para enviar os dados.',
+            style: TextStyle(
+                fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ),
+          actions: [
+            TextButton(
+              child: Text(
+                'OK',
+                style: TextStyle(color: Colors.white),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop(); // Fecha o diálogo
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class FeedbackScreen extends StatelessWidget {
   final Future<String?> futureResult;
 
-  const FeedbackScreen({super.key, required this.futureResult});
+  FeedbackScreen({super.key, required this.futureResult});
 
   @override
   Widget build(BuildContext context) {
@@ -29,14 +29,28 @@ class FeedbackScreen extends StatelessWidget {
   }
 
   successMessage() {
-    return Center(
+    return const Center(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             'Dados submetidos com sucesso!',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold),
           ),
-          Icon(Icons.check_circle)
+          Icon(
+            Icons.check_circle,
+            color: Colors.green,
+            size: 80,
+          ),
+          SizedBox(
+            height: 70,
+          ),
+          Text(
+            '(Para sair, toque em qualquer lugar fora desta tela)',
+            style: TextStyle(
+                color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+          ),
         ],
       ),
     );
@@ -50,20 +64,40 @@ class FeedbackScreen extends StatelessWidget {
             snapshot.data,
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
+          SizedBox(
+            height: 70,
+          ),
+          Text(
+            '(Para sair, toque em qualquer lugar fora desta tela)',
+            style: TextStyle(
+                color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+          ),
         ],
       ),
     );
   }
 
   unknownErrorMessage() {
-    return Center(
+    return const Center(
       child: Column(
         children: [
           Text(
             'Um erro desconhecido ocorreu.',
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
-          Icon(Icons.error)
+          Icon(
+            Icons.error,
+            color: Colors.red,
+            size: 80,
+          ),
+          SizedBox(
+            height: 70,
+          ),
+          Text(
+            '(Para sair, toque em qualquer lugar fora desta tela)',
+            style: TextStyle(
+                color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+          ),
         ],
       ),
     );
