@@ -1,3 +1,5 @@
+import 'package:aula05_forms/provider/sheets_provider.dart';
+import 'package:aula05_forms/view/screens/feedback_screen.dart';
 import 'package:flutter/material.dart';
 
 class TerceiraTela extends StatefulWidget {
@@ -8,7 +10,9 @@ class TerceiraTela extends StatefulWidget {
 }
 
 class _TerceiraTelaState extends State<TerceiraTela> {
-  String nome = '';
+  String name = '';
+  String contact = '';
+  String userMessage = '';
   final GlobalKey<FormState> _formKey = GlobalKey<
       FormState>(); //mantem variavel caso ocorra alguma interrupcao no android
   bool _termsAccepted = false;
@@ -30,20 +34,22 @@ class _TerceiraTelaState extends State<TerceiraTela> {
                 return null;
               },
               onSaved: (value) {
-// Ação ao salvar o campo
+                // Ação ao salvar o campo
+                name = value!;
               },
             ),
             TextFormField(
               decoration:
-                  InputDecoration(labelText: 'Email'), // Rótulo do campo
+                  InputDecoration(labelText: 'Contato'), // Rótulo do campo
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Por favor, insira seu nome'; // Mensagem de erro
+                  return 'Por favor, insira seu contato'; // Mensagem de erro
                 }
                 return null;
               },
               onSaved: (value) {
-// Ação ao salvar o campo
+                // Ação ao salvar o campo
+                contact = value!;
               },
             ),
             TextFormField(
@@ -51,12 +57,13 @@ class _TerceiraTelaState extends State<TerceiraTela> {
                   labelText: 'Mensagem do Usuario'), // Rótulo do campo
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Por favor, insira seu nome'; // Mensagem de erro
+                  return 'Por favor, insira uma mensagem'; // Mensagem de erro
                 }
                 return null;
               },
               onSaved: (value) {
-// Ação ao salvar o campo
+                // Ação ao salvar o campo
+                userMessage = value!;
               },
             ),
             RadioListTile(
@@ -90,7 +97,9 @@ class _TerceiraTelaState extends State<TerceiraTela> {
                   );
                 }).toList(),
                 onChanged: (String? newValue) {
-                  setState(() {});
+                  setState(() {
+                    _selectedCategory = newValue;
+                  });
                 }),
             CheckboxListTile(
               title: Text('Aceito os termos e condições'),
@@ -105,8 +114,25 @@ class _TerceiraTelaState extends State<TerceiraTela> {
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
-// Aqui você pode processar os dados salvos
-                  print('Formulário salvo com sucesso!');
+                  Future<String?> futureResult =
+                      SheetsDatabase.helper.submitData([
+                    name,
+                    contact,
+                    userMessage,
+                    _selectedOption == 1 ? 'Email' : 'Telefone',
+                    _selectedCategory!
+                  ]);
+
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Container(
+                        padding: const EdgeInsets.all(16.0),
+                        color: Colors.grey[900], // Fundo da BottomSheet
+                        child: FeedbackScreen(futureResult: futureResult),
+                      );
+                    },
+                  );
                 }
               },
               child: Text('Enviar'),

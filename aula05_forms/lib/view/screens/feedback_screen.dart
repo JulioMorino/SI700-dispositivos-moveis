@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class FeedbackScreen extends StatelessWidget {
-  final Future<String> futureResult;
+  final Future<String?> futureResult;
 
-  FeedbackScreen({super.key, required this.futureResult});
+  const FeedbackScreen({super.key, required this.futureResult});
 
   @override
   Widget build(BuildContext context) {
