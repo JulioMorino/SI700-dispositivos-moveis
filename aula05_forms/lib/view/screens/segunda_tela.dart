@@ -22,11 +22,15 @@ class _SegundaTelaState extends State<SegundaTela> {
             CircleAvatar(
               radius: 120,
               backgroundImage: NetworkImage(
-                  'https://raw.githubusercontent.com/ulissesdias/si700/main/e_forms_intro/assets/images/ulisses.gif'),
+                  'https://raw.githubusercontent.com/JulioMorino/ComputacaoGrafica/main/texturas/01_gato_persa.webp'),
             ),
             Text(
-              'Professor Ulisses Dias',
-              style: TextStyle(color: Colors.white, fontSize: 25),
+              'Disponível em: ',
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            Text(
+              'https://github.com/JulioMorino/ComputacaoGrafica',
+              style: TextStyle(color: Colors.white, fontSize: 15),
             )
           ],
         ));

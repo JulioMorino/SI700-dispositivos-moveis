@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class TerceiraTela extends StatefulWidget {
-  const TerceiraTela({Key? key}) : super(key: key);
+class PrimeiraTela extends StatefulWidget {
+  const PrimeiraTela({Key? key}) : super(key: key);
 
   @override
-  State<TerceiraTela> createState() => _TerceiraTelaState();
+  State<PrimeiraTela> createState() => _PrimeiraTelaState();
 }
 
-class _TerceiraTelaState extends State<TerceiraTela> {
+class _PrimeiraTelaState extends State<PrimeiraTela> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -18,20 +18,31 @@ class _TerceiraTelaState extends State<TerceiraTela> {
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
                 padding: EdgeInsets.all(15),
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    border: Border.all(width: 5),
+                    border: Border.all(width: 3),
                   ),
                   child: Image.network(
-                      'https://raw.githubusercontent.com/ulissesdias/si700/main/e_forms_intro/assets/images/ulisses.gif'),
+                    'https://raw.githubusercontent.com/JulioMorino/ComputacaoGrafica/main/texturas/01_gato_persa.webp',
+                  ),
                 )),
             Text(
-              'Utils.linkUniformVariable({kind: 2fv})',
+              'Imagem retirada do repositorio de atividades da disciplina ST765 da Unicamp',
               style: TextStyle(color: Colors.white, fontSize: 20),
+              textAlign: TextAlign.center,
+            ),
+            Text(
+              'Disponível em: ',
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            Text(
+              'https://github.com/JulioMorino/ComputacaoGrafica',
+              style: TextStyle(color: Colors.white, fontSize: 15),
             )
           ],
         ));

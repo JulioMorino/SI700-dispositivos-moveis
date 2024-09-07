@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class PrimeiraTela extends StatefulWidget {
-  const PrimeiraTela({Key? key}) : super(key: key);
+class TerceiraTela extends StatefulWidget {
+  const TerceiraTela({Key? key}) : super(key: key);
 
   @override
-  State<PrimeiraTela> createState() => _PrimeiraTelaState();
+  State<TerceiraTela> createState() => _TerceiraTelaState();
 }
 
-class _PrimeiraTelaState extends State<PrimeiraTela> {
+class _TerceiraTelaState extends State<TerceiraTela> {
   String nome = '';
   final GlobalKey<FormState> _formKey = GlobalKey<
       FormState>(); //mantem variavel caso ocorra alguma interrupcao no android
