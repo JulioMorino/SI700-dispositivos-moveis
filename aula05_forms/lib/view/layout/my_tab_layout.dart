@@ -40,7 +40,6 @@ class MyTabLayout extends StatelessWidget {
               )),
           body: TabBarView(
               children: [PrimeiraTela(), SegundaTela(), TerceiraTela()]),
-          drawer: MyNavigationDrawer(),
         ));
   }
 }
