@@ -1,4 +1,3 @@
-import 'package:aula05_forms/view/layout/my_navigation_drawer.dart';
 import 'package:aula05_forms/view/screens/primeira_tela.dart';
 import 'package:aula05_forms/view/screens/segunda_tela.dart';
 import 'package:aula05_forms/view/screens/terceira_tela.dart';
