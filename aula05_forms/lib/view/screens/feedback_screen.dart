@@ -32,7 +32,10 @@ class FeedbackScreen extends StatelessWidget {
     return Center(
       child: Column(
         children: [
-          Text('Dados submetidos com sucesso!'),
+          Text(
+            'Dados submetidos com sucesso!',
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
           Icon(Icons.check_circle)
         ],
       ),
@@ -43,7 +46,10 @@ class FeedbackScreen extends StatelessWidget {
     return Center(
       child: Column(
         children: [
-          Text(snapshot.data),
+          Text(
+            snapshot.data,
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
         ],
       ),
     );
@@ -52,7 +58,13 @@ class FeedbackScreen extends StatelessWidget {
   unknownErrorMessage() {
     return Center(
       child: Column(
-        children: [Text('Um erro desconhecido ocorreu.'), Icon(Icons.error)],
+        children: [
+          Text(
+            'Um erro desconhecido ocorreu.',
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+          Icon(Icons.error)
+        ],
       ),
     );
   }

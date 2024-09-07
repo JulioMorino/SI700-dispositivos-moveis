@@ -18,7 +18,7 @@ class SheetsDatabase {
   final _spreadsheetId =
       "1WdtDDPIHO7bRIlhKi0UnfLIPq-8UDQtU-Pj-S9TmRSM"; // Substitua pelo seu ID da planilha
   final _sheetName =
-      'Dados_salvos_atividade2'; // Substitua pelo nome da aba da planilha
+      'DadosAtividade2'; // Substitua pelo nome da aba da planilha
 
   // Construtor privado para a instância singleton
   SheetsDatabase._createInstance();
