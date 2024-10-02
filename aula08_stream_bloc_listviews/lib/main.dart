@@ -1,4 +1,5 @@
 import 'package:aula08_stream_bloc_listviews/bloc/manage_bloc.dart';
+import 'package:aula08_stream_bloc_listviews/view/add_note.dart';
 import 'package:aula08_stream_bloc_listviews/view/list_note.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,8 +50,15 @@ class _MyHomePageState extends State<MyHomePage> {
         child: ListNote(),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Increment',
+        onPressed: () {
+          BlocProvider.of<ManageBloc>(context).add(
+              UpdateCancel()); //garante que estarei no estado de Insert quando clicar em adicionar
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddNote()),
+          );
+        },
+        tooltip: 'Inserir no Banco',
         child: const Icon(Icons.add),
       ),
     );

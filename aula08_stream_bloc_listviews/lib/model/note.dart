@@ -9,7 +9,7 @@ class Note {
     noteId = '';
   }
 
-  Note.withData({this.title = '', this.description = ''});
+  Note.withData({this.title = '', this.description = '', this.noteId = ''});
 
   //construtor util para tratar recebimento de arquivos json, que o flutter converte para map
   Note.fromMap(map) {

@@ -15,7 +15,7 @@ class ManageBloc extends Bloc<ManageEvent, ManageState> {
     on<DeleteEvent>((event, emit) {
       GenericCrudProvider.helper.deleteNote(event.noteId);
     });
-
+    //////
     on<UpdateRequest>((event, emit) {
       emit(UpdateState(
           noteId: event.noteId,

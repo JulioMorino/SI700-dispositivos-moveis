@@ -9,9 +9,13 @@ class GenericCrudProvider {
 
   Map<String, Note> database = {
     "a": Note.withData(
-        title: 'Deu certo', description: 'Isto é uma descrição......'),
+        title: 'Deu certo',
+        description: 'Isto é uma descrição......',
+        noteId: 'a'),
     "b": Note.withData(
-        title: 'Deu certo 2', description: 'Isto é uma segunda descrição.')
+        title: 'Deu certo 2',
+        description: 'Isto é uma segunda descrição.',
+        noteId: 'b')
   };
   int numInsertions = 0; //incrementador de IDs
 
