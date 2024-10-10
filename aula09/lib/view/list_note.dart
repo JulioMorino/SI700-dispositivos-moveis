@@ -39,6 +39,9 @@ class ListNoteScreen extends StatelessWidget {
             tooltip: 'Botão 2',
             child: const Icon(Icons.logout),
           ),
+          FloatingActionButton(onPressed: (){
+            BlocProvider.of<ManageBloc>(context).add(GetNoteListEvent());
+          }, child: const Icon(Icons.refresh),)
         ],
       ),
       body: BlocBuilder<ManageBloc, ManageState>(

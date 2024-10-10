@@ -7,7 +7,8 @@ import '../model/note.dart';
 
 class GenericCrudProvider {
   static GenericCrudProvider helper = GenericCrudProvider._createInstance();
-  Dio _dio = Dio(); 
+  Dio _dio = Dio();
+  String path = 'https://aula09-notes-default-rtdb.firebaseio.com/.json'; 
 
   GenericCrudProvider._createInstance() {
     
@@ -22,25 +23,17 @@ class GenericCrudProvider {
   Future<List<Note>> getNoteList() async {}
 */
 
-  Map<String, Note> database = {
-    "a": Note.withData(
-      title: "Primeiro Elemento",
-      description: "Primeira Descrição",
-      noteId: "a",
-    ),
-    "b": Note.withData(
-        title: "Segundo Elemento",
-        description: "Segunda Descrição",
-        noteId: "b"),
-  };
-  int numInsertions = 0;
+  
 
   Future<Note> getNote(String noteId) async {
-    return database[noteId] ?? Note.withData(title: "Não existe no BD");
+    Response response = await _dio.get('https://aula09-notes-default-rtdb.firebaseio.com/$noteId/.json');
+    Note note = Note.fromMap(response.data);
+    note.noteId = noteId;
+    return note;
   }
 
   Future<String> insertNote(Note note) async {
-    _dio.post('https://aula09-notes-default-rtdb.firebaseio.com/.json', data: note.toMap());
+    _dio.post(path, data: note.toMap());
 
     // String key = numInsertions.toString();
     // note.noteId = key;
@@ -51,20 +44,35 @@ class GenericCrudProvider {
   }
 
   Future<String> updateNote(String noteId, Note note) async {
-    note.noteId = noteId;
-    database[noteId] = note;
+    _dio.put('https://aula09-notes-default-rtdb.firebaseio.com/$noteId/.json', //essa interpolacao e importante pois, sem ela, perde-se todos os dados. ela garante q o update ocorre apenas no noteId desejado
+    data: note.toMap());
+    
+    // note.noteId = noteId;
+    // database[noteId] = note;
     _controller.sink.add(noteId);
     return noteId;
   }
 
   Future<String> deleteNote(String noteId) async {
-    database.remove(noteId);
+    _dio.delete('https://aula09-notes-default-rtdb.firebaseio.com/$noteId/.json');
+
+    // database.remove(noteId);
     _controller.sink.add(noteId);
     return noteId;
   }
 
   Future<List<Note>> getNoteList() async {
-    return database.values.toList();
+    Response response = await _dio.get(path);
+    List<Note> noteList = [];
+
+    response.data.forEach((key, value){
+      Note note = Note.fromMap(value);
+      note.noteId = key;
+      noteList.add(note);
+    });
+
+    _controller.sink.add(noteList);
+    return noteList;
   }
 
   /*
