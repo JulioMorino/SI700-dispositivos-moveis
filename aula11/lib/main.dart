@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'bloc/auth_bloc.dart';
 
@@ -9,7 +10,21 @@ import 'view/add_note.dart';
 import 'view/list_note.dart';
 import 'view/wrapper.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+            apiKey: "AIzaSyBd3dtva1HexybyOgj2gAiyef0f3yjuj-8",
+  authDomain: "aula09-notes.firebaseapp.com",
+  databaseURL: "https://aula09-notes-default-rtdb.firebaseio.com",
+  projectId: "aula09-notes",
+  storageBucket: "aula09-notes.appspot.com",
+  messagingSenderId: "446234767943",
+  appId: "1:446234767943:web:b093725737f9456966f762"
+  
+  
+  ));
+  
   runApp(const MyApp());
 }
 
