@@ -7,6 +7,9 @@ class GenericDataProvider {
   int numInsertions = 0;
   Map<String, List> _database = {};
   StreamController _controller = StreamController();
+  static GenericDataProvider helper = GenericDataProvider._createInstance();
+
+  GenericDataProvider._createInstance();
 
   Future<String> insertAnswer(Answer answer) async {
     String answerId = 'answer$numInsertions';
