@@ -1,5 +1,3 @@
-
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../model/note.dart';
@@ -7,9 +5,10 @@ import '../provider/generic_crud_provider.dart';
 
 class ManageBloc extends Bloc<ManageEvent, ManageState> {
   ManageBloc(super.initialState) {
-    GenericCrudProvider.helper.stream.listen((noteId) {
+    GenericCrudProvider.helper.stream.listen((noteList) {
       // Precisaria no futuro ser repensado
-      add(GetNoteListEvent());
+
+      add(UpdateNoteListEvent(noteList: noteList));
     });
 
     on<DeleteEvent>((event, emit) {
@@ -62,6 +61,21 @@ class ManageBloc extends Bloc<ManageEvent, ManageState> {
         ));
       }
     });
+
+    on<UpdateNoteListEvent>((event, emit) async {
+      List<Note> noteList = event.noteList;
+
+      if (state is UpdateState) {
+        emit(UpdateState(
+          noteId: (state as UpdateState).noteId,
+          noteList: noteList,
+        ));
+      } else if (state is InsertState) {
+        emit(InsertState(
+          noteList: noteList,
+        ));
+      }
+    });
   }
 }
 
@@ -81,6 +95,12 @@ class DeleteEvent extends ManageEvent {
 }
 
 class GetNoteListEvent extends ManageEvent {}
+
+class UpdateNoteListEvent extends ManageEvent {
+  List<Note> noteList;
+
+  UpdateNoteListEvent({required this.noteList});
+}
 
 class UpdateRequest extends ManageEvent {
   String noteId;
