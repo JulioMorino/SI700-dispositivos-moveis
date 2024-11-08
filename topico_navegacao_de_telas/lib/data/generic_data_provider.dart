@@ -32,8 +32,13 @@ class GenericDataProvider {
   }
 
   Future<Answer> getAnswer(String answerId) async {
-    List answerList = _database.values.toList();
-    return Answer(numQuestions: answerList.length);
+    // Recupera o answerList do banco de dados para o answerId
+    List? answerList = _database[answerId];
+    if (answerList == null) {
+      throw Exception("Answer ID não encontrado.");
+    }
+    // Retorna a Answer com a lista de respostas correta
+    return Answer.withData(answerList: answerList);
   }
 
   Future<AnswerCollection> getAllAnswers() async {

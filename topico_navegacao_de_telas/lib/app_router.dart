@@ -69,6 +69,13 @@ class AppRouter {
             child: QuestionsScreen(children: localBucket),
           );
         });
+      case "/update":
+        return MaterialPageRoute(builder: (_) {
+          return MultiBlocProvider(
+              providers: [BlocProvider.value(value: _manageBloc)],
+              child: QuestionsScreen(children: localBucket));
+        });
+
       default:
         return MaterialPageRoute(builder: (_) => const Text("Erro"));
     }

@@ -10,30 +10,52 @@ class ManageBloc extends Bloc<ManageEvent, ManageState> {
   ManageBloc({required this.numQuestions})
       : super(ManageState.build(numQuestions)) {
     answers = Answer(numQuestions: numQuestions);
-    on<CreateRecord>((event, emit) {
-      createRecord(answer: answers);
+    on<CreateRecord>((event, emit) async {
+      final newAnswer = Answer(numQuestions: numQuestions);
+      answerId = await GenericDataProvider.helper.insertAnswer(newAnswer);
+      print("Acabou de salvar o id: ${answerId}");
+      emit(ManageState(
+          answers: newAnswer,
+          answerId:
+              answerId)); //comentar no video, antes usava apenas ManageState
+    });
+
+    on<UpdateRecord>((event, emit) async {
+      answerId = event.answerId;
+      print("passou answerId: $answerId para o answerToUpdate");
+      final answerToUpdate =
+          await GenericDataProvider.helper.getAnswer(answerId);
+
+      answers = answerToUpdate;
       emit(ManageState(answers: answers, answerId: answerId));
     });
-    on<UpdateRecord>((event, emit) {
-      updateRecord(answerId: event.answerId);
-      emit(ManageState(answers: answers, answerId: answerId));
-    });
+
     on<DeleteRecord>((event, emit) {
-      deleteRecord(answerId: event.answerId);
-      emit(ManageState(answers: answers, answerId: answerId));
+      GenericDataProvider.helper.deleteAnswer(event.answerId);
+      answerId = "";
+      emit(ManageState(
+          answers: Answer(numQuestions: numQuestions), answerId: answerId));
     });
+
     on<SwapAnswer>((event, emit) {
-      swapAnswer(answer: answers, question: event.question, value: event.value);
-      emit(ManageState(answers: answers, answerId: answerId));
+      final updatedAnswer = state.answers
+        ..swapAnswer(event.question, event.value);
+      GenericDataProvider.helper.updateAnswer(answerId, updatedAnswer);
+      emit(ManageState(answers: updatedAnswer, answerId: answerId));
     });
+
     on<SetAnswer>((event, emit) {
-      setAnswer(answer: answers, question: event.question, value: event.value);
-      emit(ManageState(answers: answers, answerId: answerId));
+      final updatedAnswer = state.answers
+        ..setAnswer(event.question, event.value);
+      GenericDataProvider.helper.updateAnswer(answerId, updatedAnswer);
+      emit(ManageState(answers: updatedAnswer, answerId: answerId));
     });
+
     on<WriteAnswer>((event, emit) {
-      writeAnswer(
-          answer: answers, question: event.question, value: event.value);
-      emit(ManageState(answers: answers, answerId: answerId));
+      final updatedAnswer = state.answers
+        ..writeAnswer(event.question, event.value);
+      GenericDataProvider.helper.updateAnswer(answerId, updatedAnswer);
+      emit(ManageState(answers: updatedAnswer, answerId: answerId));
     });
   }
 

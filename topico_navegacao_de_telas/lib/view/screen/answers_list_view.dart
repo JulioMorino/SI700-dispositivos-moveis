@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/answer_manager.dart';
 import '../../bloc/answers_monitor.dart';
+import '../../model/answer.dart';
 import '../../model/answer_collection.dart';
 
 class AnswerList extends StatelessWidget {
@@ -28,9 +29,21 @@ class AnswerList extends StatelessWidget {
       AnswerCollection answerCollection = state.answerCollection;
       return ListView.separated(
         itemCount: answerCollection.length(),
-        itemBuilder: (context, index) => ListTile(
-          title: Text('${answerCollection.getAnswerAtIndex(index)}ª resposta'),
-        ),
+        itemBuilder: (context, index) {
+          return ListTile(
+            onTap: () {
+              Answer tappedAnswer = BlocProvider.of<MonitorBloc>(context)
+                  .state
+                  .answerCollection
+                  .answerList[index];
+
+              BlocProvider.of<ManageBloc>(context).add(
+                  UpdateRecord(answerId: answerCollection.getIdAtIndex(index)));
+              Navigator.pushNamed(context, '/create');
+            },
+            title: Text('${index + 1}ª resposta'),
+          );
+        },
         separatorBuilder: (_, __) => const Divider(),
       );
     });

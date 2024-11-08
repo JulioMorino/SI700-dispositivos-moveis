@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Sistema de Formulário',
+      title: 'Formulários - Aula 13',
       theme: ThemeData(primarySwatch: Colors.blue),
       onGenerateRoute: _appRouter.onGenerateRoute,
       initialRoute: '/',
