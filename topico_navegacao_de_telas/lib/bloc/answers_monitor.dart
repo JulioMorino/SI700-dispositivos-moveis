@@ -6,8 +6,10 @@ import 'package:topico_navegacao_de_telas/model/answer_collection.dart';
 class MonitorBloc extends Bloc<MonitorEvent, MonitorState> {
   late AnswerCollection answerCollection;
 
-  MonitorBloc(super.initialState) {
-    this.answerCollection = AnswerCollection(idList: [], answerList: []);
+  MonitorBloc()
+      : super(MonitorState(
+            answerCollection: AnswerCollection(idList: [], answerList: []))) {
+    answerCollection = AnswerCollection(idList: [], answerList: []);
     GenericDataProvider.helper.stream.listen((event) {
       final String answerId = event[0];
       final answer = event[1];
@@ -36,6 +38,8 @@ class MonitorBloc extends Bloc<MonitorEvent, MonitorState> {
         emit(MonitorState(answerCollection: answerCollection));
       },
     );
+
+    add(AskNewList());
   }
 }
 

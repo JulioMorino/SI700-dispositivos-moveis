@@ -12,3 +12,6 @@ class Question {
 }
 
 enum QuestionType { singleShort, singleLong, multiple, text }
+
+//singleShort => crio widget RadioButton (somente uma resposta e poucas opcoes)
+//singleLong  => 
