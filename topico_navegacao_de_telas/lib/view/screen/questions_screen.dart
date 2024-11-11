@@ -19,8 +19,7 @@ class _QuestionScreenState extends State<QuestionsScreen> {
               for (var i = 1; i <= widget.children.length; i++) Tab(text: "$i")
             ],
           ),
-          title: const Text(
-              "Aula 13 - Programação para Mobile - Questionários com Navigator"),
+          title: const Text("Aula 13 - Questionários com Navigator"),
         ),
         body: TabBarView(children: widget.children),
       ),

@@ -6,6 +6,11 @@ class QuestionProvider {
   QuestionProvider._createInstance();
   Questions questions = Questions(questionList: [
     Question(
+        titulo: "Dado pessoal",
+        subTitulo: "Indique seu nome completo",
+        alternatives: [],
+        type: QuestionType.text),
+    Question(
         titulo: "Pergunta 1",
         subTitulo: "Qual o sentido da vida",
         alternatives: ["a) dormir", "b) comer", "c) beber", "d) não sei"],
@@ -22,13 +27,21 @@ class QuestionProvider {
         type: QuestionType.singleShort),
     Question(
         titulo: "Pergunta 3",
-        subTitulo: "aaaaaaa",
+        subTitulo: "Gostou das questões?(0 a 5)",
         alternatives: [
-          "a)bbbbb",
-          "b)ccccc",
-          "c)dddd",
-          "d)todas alternativas anteriores"
+          "0 - muito ruim, não recomendarei para outras pessoas.",
+          "1 - faltou muitas perguntas importantes.",
+          "2 - mais ou menos.",
+          "3 - neutro.",
+          "4 - questões boas, reflexivas e importantes.",
+          "5 - absolute cinema."
         ],
+        type: QuestionType.singleLong),
+    Question(
+        titulo: "Feedback",
+        subTitulo:
+            "Escreva aqui seu feedback para melhorarmos questões futuras",
+        alternatives: [],
         type: QuestionType.text),
 // Adicione mais perguntas conforme necessário
   ], breakpoints: [

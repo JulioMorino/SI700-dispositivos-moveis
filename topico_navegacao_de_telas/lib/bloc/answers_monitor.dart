@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:topico_navegacao_de_telas/data/generic_data_provider.dart';
-import 'package:topico_navegacao_de_telas/model/answer.dart';
 import 'package:topico_navegacao_de_telas/model/answer_collection.dart';
 
 class MonitorBloc extends Bloc<MonitorEvent, MonitorState> {

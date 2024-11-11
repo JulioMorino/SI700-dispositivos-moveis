@@ -14,10 +14,7 @@ class ManageBloc extends Bloc<ManageEvent, ManageState> {
       final newAnswer = Answer(numQuestions: numQuestions);
       answerId = await GenericDataProvider.helper.insertAnswer(newAnswer);
       print("Acabou de salvar o id: ${answerId}");
-      emit(ManageState(
-          answers: newAnswer,
-          answerId:
-              answerId)); //comentar no video, antes usava apenas ManageState
+      emit(ManageState(answers: newAnswer, answerId: answerId));
     });
 
     on<UpdateRecord>((event, emit) async {
@@ -57,21 +54,6 @@ class ManageBloc extends Bloc<ManageEvent, ManageState> {
       GenericDataProvider.helper.updateAnswer(answerId, updatedAnswer);
       emit(ManageState(answers: updatedAnswer, answerId: answerId));
     });
-  }
-
-  //CRUD RESPOSTAS
-  createRecord({required Answer answer}) {
-    GenericDataProvider.helper.insertAnswer(answer);
-  }
-
-  updateRecord({required String answerId}) async {
-    Answer answerToUpdate =
-        await GenericDataProvider.helper.getAnswer(answerId);
-    GenericDataProvider.helper.updateAnswer(answerId, answerToUpdate);
-  }
-
-  deleteRecord({required String answerId}) {
-    GenericDataProvider.helper.deleteAnswer(answerId);
   }
 
   //MANIPULACAO RESPOSTAS

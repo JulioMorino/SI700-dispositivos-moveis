@@ -14,8 +14,8 @@ import 'view/widgets/checkbox_field.dart';
 import 'view/widgets/text_field.dart';
 
 class AppRouter {
-  int numQuestions = 5;
-  int numScreens = 5;
+  int numQuestions = 0;
+  int numScreens = 0;
   late ManageBloc _manageBloc;
   late MonitorBloc _monitorBloc;
 
@@ -68,12 +68,6 @@ class AppRouter {
             ],
             child: QuestionsScreen(children: localBucket),
           );
-        });
-      case "/update":
-        return MaterialPageRoute(builder: (_) {
-          return MultiBlocProvider(
-              providers: [BlocProvider.value(value: _manageBloc)],
-              child: QuestionsScreen(children: localBucket));
         });
 
       default:
