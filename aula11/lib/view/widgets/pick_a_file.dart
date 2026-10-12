@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class PickAFile extends StatefulWidget {
   final Function(String?) onChanged;
@@ -52,7 +53,23 @@ class _PickAFileState extends State<PickAFile> {
               } else {}
               print(fileBytes);
             },
-            child: Text("FilePicker"))
+            child: Text("FilePicker")),
+        IconButton(
+          tooltip: "Tirar foto",
+          onPressed: () async {
+            final XFile? image =
+                await ImagePicker().pickImage(source: ImageSource.camera);
+
+            if (image != null) {
+              final Uint8List imageBytes = await image.readAsBytes();
+              setState(() {
+                fileBytes = base64Encode(imageBytes);
+              });
+              widget.onChanged(fileBytes);
+            }
+          },
+          icon: const Icon(Icons.camera_alt),
+        ),
       ],
     );
   }
