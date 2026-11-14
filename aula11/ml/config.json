@@ -1,0 +1,5 @@
+{
+  "match_threshold": 0.765,
+  "rock_threshold": 0.3,
+  "top_k": 3
+}

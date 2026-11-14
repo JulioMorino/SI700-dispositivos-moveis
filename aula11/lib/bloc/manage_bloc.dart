@@ -15,9 +15,14 @@ class ManageBloc extends Bloc<ManageEvent, ManageState> {
   ManageBloc(super.initialState) {
     on<SubscribeNoteStreamEvent>((event, emit) async {
       await _noteSubscription?.cancel();
-      _noteSubscription = GenericCrudProvider.helper.stream.listen((noteList) {
-        add(UpdateNoteListEvent(noteList: noteList));
-      });
+      _noteSubscription = GenericCrudProvider.helper.stream.listen(
+        (noteList) {
+          add(UpdateNoteListEvent(noteList: noteList));
+        },
+        // Deslogado (uid "default"), as regras do Firestore negam a leitura.
+        // Sem onError, isso viraria um erro não tratado no console.
+        onError: (e) => debugPrint("Stream de notas: $e"),
+      );
     });
 
     add(SubscribeNoteStreamEvent());

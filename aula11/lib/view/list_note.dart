@@ -2,6 +2,8 @@
 
 import '../bloc/auth_bloc.dart';
 import '../bloc/manage_bloc.dart';
+import '../bloc/recognition_bloc.dart';
+import 'recognize_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,7 +43,20 @@ class ListNoteScreen extends StatelessWidget {
           ),
           FloatingActionButton(onPressed: (){
             BlocProvider.of<ManageBloc>(context).add(GetNoteListEvent());
-          }, child: const Icon(Icons.refresh),)
+          }, child: const Icon(Icons.refresh),),
+          const SizedBox(width: 16),
+          FloatingActionButton(
+            heroTag: "recognize",
+            tooltip: "Reconhecer rocha",
+            onPressed: () {
+              BlocProvider.of<RecognitionBloc>(context)
+                ..add(ResetRecognition())
+                ..add(PrepareRecognition());
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const RecognizeScreen()));
+            },
+            child: const Icon(Icons.landscape),
+          ),
         ],
       ),
       body: BlocBuilder<ManageBloc, ManageState>(

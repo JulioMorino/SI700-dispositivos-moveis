@@ -43,4 +43,15 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-/ml
+# Reconhecimento de rochas: scripts e relatório são versionados,
+# mas fotos, ambiente virtual e arquivos gerados não.
+/ml/dataset/
+/ml/.venv/
+/ml/index.npz
+/ml/*.onnx
+/ml/export/
+/assets/models/*.onnx
+__pycache__/
+# Chave de conta de serviço do Firebase: NUNCA versionar
+*serviceAccount*.json
+*firebase-adminsdk*.json

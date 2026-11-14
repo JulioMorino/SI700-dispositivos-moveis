@@ -1,4 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Release build: sem isso o app não acessa a rede (debug/profile já declaram). -->
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="aula11"
         android:name="${applicationName}"

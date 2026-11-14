@@ -45,7 +45,8 @@ android {
         applicationId "com.example.aula11"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
-        minSdkVersion 23
+        // 24 (Android 7.0): mínimo exigido pelo ONNX Runtime (flutter_onnxruntime)
+        minSdkVersion 24
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
