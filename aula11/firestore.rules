@@ -1,0 +1,31 @@
+rules_version = '2';
+
+// Cole este conteúdo em: Console Firebase -> Firestore Database -> Regras -> Publicar.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Notas: cada usuário só lê e escreve as próprias.
+    match /notes/{uid}/my_notes/{noteId} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // Rochas de referência e configuração do reconhecimento:
+    // qualquer usuário LOGADO lê; ninguém escreve pelo app.
+    // (o upload_firestore.py usa o Admin SDK, que ignora estas regras)
+    // Futuro "curador": liberar write para quem tiver um custom claim, ex.:
+    //   allow write: if request.auth.token.curator == true;
+    match /rocks/{rockId} {
+      allow read: if request.auth != null;
+      allow write: if false;
+    }
+    match /recognition_config/{docId} {
+      allow read: if request.auth != null;
+      allow write: if false;
+    }
+
+    // Todo o resto: bloqueado.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

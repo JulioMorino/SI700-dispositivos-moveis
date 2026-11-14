@@ -1,0 +1,14 @@
+{
+  "tronco_silicificado": {
+    "name": "Tronco Silicificado",
+    "lithology": "Madeira fóssil silicificada",
+    "minerals": ["Quartzo / calcedônia (sílica)"],
+    "description": "Fragmento de tronco de árvore fossilizado. Ao longo de milhões de anos a matéria orgânica da madeira foi substituída por sílica dissolvida na água, preservando a estrutura do lenho, como os anéis de crescimento e as fibras."
+  },
+  "gnaisse_granada_cianita": {
+    "name": "Gnaisse com Granada e Cianita",
+    "lithology": "Gnaisse (rocha metamórfica)",
+    "minerals": ["Quartzo", "Feldspato", "Biotita", "Granada", "Cianita"],
+    "description": "Rocha metamórfica de alto grau com bandamento gnáissico, em que faixas claras de quartzo e feldspato se alternam com faixas escuras de micas. A granada (cristais avermelhados) e a cianita (cristais azulados e alongados) indicam que a rocha se formou sob alta pressão e temperatura, em grandes profundidades da crosta."
+  }
+}

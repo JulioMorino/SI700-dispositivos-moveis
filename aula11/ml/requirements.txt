@@ -1,0 +1,9 @@
+# Instale o torch CPU antes, para não baixar a versão com CUDA (bem maior):
+#   pip install torch --index-url https://download.pytorch.org/whl/cpu
+torch
+open_clip_torch
+pillow
+numpy
+fastapi
+uvicorn
+python-multipart

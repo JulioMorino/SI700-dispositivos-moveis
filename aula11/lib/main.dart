@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'bloc/auth_bloc.dart';
 
 import 'bloc/manage_bloc.dart';
+import 'bloc/recognition_bloc.dart';
 
 import 'view/add_note.dart';
 import 'view/list_note.dart';
@@ -47,7 +48,12 @@ class MyApp extends StatelessWidget {
           create: (context) {
             return AuthBloc();
           },
-        )
+        ),
+        BlocProvider(
+          create: (context) {
+            return RecognitionBloc();
+          },
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
