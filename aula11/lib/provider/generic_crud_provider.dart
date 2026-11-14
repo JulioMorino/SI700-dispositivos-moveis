@@ -40,7 +40,9 @@ class GenericCrudProvider {
   }
 
   Future<String> insertNote(Note note) async {
-    noteCollection.doc(uid).collection("my_notes").add(note.toMap());
+    // await: sem ele, se o Firestore rejeitar a escrita (ex.: documento
+    // maior que 1 MiB), o erro é perdido em silêncio.
+    await noteCollection.doc(uid).collection("my_notes").add(note.toMap());
 
     // _dio.post(
     //     'https://c9fbeafb-bf92-49fc-b603-f32a2c633069-00-2ilewbikzvnu8.janeway.replit.dev/notes',
@@ -57,7 +59,7 @@ class GenericCrudProvider {
   }
 
   Future<String> updateNote(String noteId, Note note) async {
-    noteCollection
+    await noteCollection
         .doc(uid)
         .collection("my_notes")
         .doc(noteId)
@@ -73,7 +75,7 @@ class GenericCrudProvider {
   }
 
   Future<String> deleteNote(String noteId) async {
-    noteCollection.doc(uid).collection("my_notes").doc(noteId).delete();
+    await noteCollection.doc(uid).collection("my_notes").doc(noteId).delete();
 
     // _dio.delete(
     //     'https://c9fbeafb-bf92-49fc-b603-f32a2c633069-00-2ilewbikzvnu8.janeway.replit.dev/notes/$noteId');
