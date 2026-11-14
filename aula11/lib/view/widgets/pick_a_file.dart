@@ -38,10 +38,12 @@ class _PickAFileState extends State<PickAFile> {
                 : Image.memory(base64Decode(fileBytes!))),
         ElevatedButton(
             onPressed: () async {
+              // withData: true -> no Android/iOS os bytes vêm null sem isso
+              // (só no web eles vêm por padrão).
               FilePickerResult? result = await FilePicker.platform.pickFiles(
                   allowMultiple: false,
-                  type: FileType.custom,
-                  allowedExtensions: ['jpg', 'png', 'jpeg', 'stl']);
+                  type: FileType.image,
+                  withData: true);
 
               if (result != null) {
                 setState(() {
@@ -57,8 +59,15 @@ class _PickAFileState extends State<PickAFile> {
         IconButton(
           tooltip: "Tirar foto",
           onPressed: () async {
-            final XFile? image =
-                await ImagePicker().pickImage(source: ImageSource.camera);
+            // Um documento do Firestore tem limite de 1 MiB. Uma foto da
+            // câmera tem vários MB (e o base64 ainda aumenta ~33%), então
+            // reduzimos a imagem já na captura.
+            final XFile? image = await ImagePicker().pickImage(
+              source: ImageSource.camera,
+              maxWidth: 800,
+              maxHeight: 800,
+              imageQuality: 60,
+            );
 
             if (image != null) {
               final Uint8List imageBytes = await image.readAsBytes();

@@ -1,18 +1,33 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../model/note.dart';
 import '../provider/generic_crud_provider.dart';
 
 class ManageBloc extends Bloc<ManageEvent, ManageState> {
-  ManageBloc(super.initialState) {
-    GenericCrudProvider.helper.stream.listen((noteList) {
-      // Precisaria no futuro ser repensado
+  // Guardamos a assinatura para poder cancelá-la e assinar de novo quando o
+  // uid mudar (login/logout). O caminho do stream depende do uid
+  // (notes/{uid}/my_notes), e ele é calculado no momento do listen.
+  StreamSubscription? _noteSubscription;
 
-      add(UpdateNoteListEvent(noteList: noteList));
+  ManageBloc(super.initialState) {
+    on<SubscribeNoteStreamEvent>((event, emit) async {
+      await _noteSubscription?.cancel();
+      _noteSubscription = GenericCrudProvider.helper.stream.listen((noteList) {
+        add(UpdateNoteListEvent(noteList: noteList));
+      });
     });
 
-    on<DeleteEvent>((event, emit) {
-      GenericCrudProvider.helper.deleteNote(event.noteId);
+    add(SubscribeNoteStreamEvent());
+
+    on<DeleteEvent>((event, emit) async {
+      try {
+        await GenericCrudProvider.helper.deleteNote(event.noteId);
+      } catch (e) {
+        debugPrint("Erro ao deletar no Firestore: $e");
+      }
     });
 
     on<UpdateRequest>(
@@ -35,14 +50,19 @@ class ManageBloc extends Bloc<ManageEvent, ManageState> {
     );
 
     on<SubmitEvent>(
-      (event, emit) {
-        if (state is UpdateState) {
-          GenericCrudProvider.helper
-              .updateNote((state as UpdateState).noteId, event.note);
+      (event, emit) async {
+        try {
+          if (state is UpdateState) {
+            await GenericCrudProvider.helper
+                .updateNote((state as UpdateState).noteId, event.note);
 
-          emit(InsertState(noteList: state.noteList));
-        } else if (state is InsertState) {
-          GenericCrudProvider.helper.insertNote(event.note);
+            emit(InsertState(noteList: state.noteList));
+          } else if (state is InsertState) {
+            await GenericCrudProvider.helper.insertNote(event.note);
+          }
+        } catch (e) {
+          // Antes o erro sumia em silêncio. Agora ele aparece no console.
+          debugPrint("Erro ao gravar no Firestore: $e");
         }
       },
     );
@@ -77,11 +97,21 @@ class ManageBloc extends Bloc<ManageEvent, ManageState> {
       }
     });
   }
+
+  @override
+  Future<void> close() async {
+    await _noteSubscription?.cancel();
+    return super.close();
+  }
 }
 
 /*
  Eventos
 */
+
+// Reassina o stream do Firestore com o uid atual do GenericCrudProvider.
+class SubscribeNoteStreamEvent extends ManageEvent {}
+
 abstract class ManageEvent {}
 
 class SubmitEvent extends ManageEvent {
